@@ -10,9 +10,19 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
+
+"""
+The below import is used to convert that database URL into a format
+Django can use to connect to an external database server.
+"""
+
 import os
 import dj_database_url
+from pathlib import Path
+
+# this is an os method to check if the env file path exists.
+# if it does it will be imported. If it doesnt the env import
+# will not be attempted, wont show up error message.
 if os.path.isfile('env.py'):
     import env
 
@@ -96,9 +106,17 @@ database instead.
 This connects to the environment variable DATABASE_URL in env.py.
 When connected to the database you can create database tables with
 Django's migrate command: python manage.py migrate.
+
+The os method
+gets the value stored in the DATABASE_URL Variable. It is then parsed
+using dj_database_url to put it in a format that Django can use.
 """
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+}
+
+SECRETK = {
+    'secret': dj_database_url.parse(os.environ.get("SECRET_KEY"))
 }
 
 # Password validation
