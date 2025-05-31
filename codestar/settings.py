@@ -16,9 +16,9 @@ The below import is used to convert that database URL into a format
 Django can use to connect to an external database server.
 """
 
+from pathlib import Path
 import os
 import dj_database_url
-from pathlib import Path
 
 # this is an os method to check if the env file path exists.
 # if it does it will be imported. If it doesnt the env import
@@ -37,7 +37,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-k^2ek*h(5*sj(=w-w$#(@10kdkl8c(l0=$d%ms!gj6+^umzn4@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '.herokuapp.com',
@@ -116,6 +116,19 @@ DATABASES = {
 }
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
+
+
+"""
+Note: (below) This is a list of the trusted origins for requests.
+As shown, you need to add both your local development
+server URL domain and your production server URL domain
+to allow you to add blog post content from the admin dashboard.
+The subdomain is wildcarded with a *.
+"""
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.codeinstitute-ide.net/",
+    "https://*.herokuapp.com"
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
