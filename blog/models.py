@@ -29,6 +29,24 @@ class Post(models.Model):
     excerpt = models.TextField(blank=True)
     updated_on = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        """
+        the - prefix puts items in descending order (3, 2, 1) newest to oldest,
+        take it away and the order ascends instead (1, 2, 3) oldest to newest.
+        if ? is prefixed then the list is randomised.
+        """
+        ordering = ["-created_on", "author"]
+
+    def __str__(self):
+        """
+        When adding posts up till now, they have appeared in the admin panel as Post object(n),
+        where n is an integer denoting the order of posts being added. Now, as per the main image,
+        they are identified in a human-readable manner.
+        The __str__() method has changed this post identifier to a string literal.
+        By passing self as an argument to the __str__() method, you can use the field values in the f-string.
+        """
+        return f"The title of this post is {self.title} | written by {self.author}"
+
 
 class Comment(models.Model):
     post = models.ForeignKey(
@@ -38,3 +56,9 @@ class Comment(models.Model):
     body = models.TextField()
     approved = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["created_on"]
+
+    def __str__(self):
+        return f"Comment {self.body} by {self.author}"
