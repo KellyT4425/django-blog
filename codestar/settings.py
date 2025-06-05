@@ -16,9 +16,9 @@ The below import is used to convert that database URL into a format
 Django can use to connect to an external database server.
 """
 
+import dj_database_url
 from pathlib import Path
 import os
-import dj_database_url
 
 # this is an os method to check if the env file path exists.
 # if it does it will be imported. If it doesnt the env import
@@ -37,7 +37,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-k^2ek*h(5*sj(=w-w$#(@10kdkl8c(l0=$d%ms!gj6+^umzn4@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '.herokuapp.com',

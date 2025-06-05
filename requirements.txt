@@ -16,6 +16,7 @@ pyasn1_modules==0.4.2
 requests==2.32.3
 requests-oauthlib==2.0.0
 rsa==4.9
+sentry-sdk==2.29.1
 setuptools==80.9.0
 sqlparse==0.5.3
 tzdata==2025.2
