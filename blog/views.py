@@ -33,5 +33,7 @@ def post_detail(request, slug):
     return render(
         request,
         "blog/post_detail.html",
+        # The object assigning the above post variable to post to allow post.content, post.author in template.
         {"post": post},
+
     )
