@@ -16,9 +16,9 @@ The below import is used to convert that database URL into a format
 Django can use to connect to an external database server.
 """
 
+from pathlib import Path
 import os
 import dj_database_url
-from pathlib import Path
 
 # this is an os method to check if the env file path exists.
 # if it does it will be imported. If it doesnt the env import
@@ -37,7 +37,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = 'django-insecure-k^2ek*h(5*sj(=w-w$#(@10kdkl8c(l0=$d%ms!gj6+^umzn4@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '.herokuapp.com',
@@ -53,10 +53,33 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # AUTH
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    # APPS
     'blog',
     'django_summernote',
     'about_me',
 ]
+# CONSTANTS re. AUTHENTICATION!!!
+"""
+SITE_ID of 1 so that Django can handle multiple sites from one database.
+We need to give each project an ID value so that the database is aware of which project is contacting it.
+We only have one site here using our one database, but we'll still need to tell Django the site number of 1 explicitly.
+"""
+SITE_ID = 1
+
+"""
+The redirection URLs are also added so that after we've logged in or logged out,
+the site will automatically redirect us to the home page.
+"""
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -67,6 +90,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # added due to allauth account in installed apps.
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'codestar.urls'
@@ -150,6 +175,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
